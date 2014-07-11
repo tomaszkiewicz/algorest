@@ -1,0 +1,27 @@
+{
+  "name": "algorest",
+  "version": "0.0.1",
+  "description": "Package allows to expose your PostgreSQL database via REST service, allowing you to query it with OData operators",
+  "main": "index.js",
+  "dependencies": {
+    "pg": "^3.3.0",
+    "pg-escape": "0.0.3"
+  },
+  "devDependencies": {
+	"express": "^3.4.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://team02.ds.algotronic.pl/tfs/DefaultCollection/_git/Algorest"
+  },
+  "keywords": [
+    "rest",
+    "db",
+    "postgresql"
+  ],
+  "author": "Łukasz Tomaszkiewicz <tomaszkiewicz@algotronic.pl>",
+  "license": "BSD-3"
+}
