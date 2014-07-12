@@ -11,21 +11,26 @@ npm install algorest --save
 
 ## Basic usage
 
+Before using the example below, please create examples/config.js file and put your connection string in it.
+
 ```js
 var express = require('express');
 var http = require('http');
 var algorest = require('algorest');
+var config = require('./config');
 
 var app = express();
 app.set('port', process.env.PORT || 4000);
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 
-var connStr = 'postgres://user:password@server/database';
+// setup algorest on app using connStr as default connection string
 
-// Here algorest comes to action
+algorest(app, config.connectionString);
 
-algorest(app, 'accounts', connStr); 
+// Here algorest comes to action - let's expose 'accounts' table via REST interface
+
+app.rest('accounts'); 
 
 // The rest is as usual
 
@@ -77,7 +82,7 @@ var options = {
     resourceName: 'konta' // konta = accounts in Polish
 };
 
-algorest(app, 'accounts', connStr, options); 
+app.rest('accounts', options); 
 ```
 
 Will expose table accounts table under /konta URL.
@@ -124,7 +129,7 @@ var options = {
     select: [ 'id', 'name' ]
 };
 
-algorest(app, 'accounts', connStr, options); 
+app.rest('accounts', options); 
 
 ```
 You can also define select property as a function with signature:
@@ -149,7 +154,7 @@ var options = {
     }
 };
 
-algorest(app, 'accounts', connStr, options); 
+app.rest('accounts', options); 
 
 ```
 
@@ -185,7 +190,7 @@ var options = {
     }
 };
 
-algorest(app, 'accounts', connStr, options); 
+app.rest('accounts', options); 
 ```
 
 It's worth mentioning that algorest apply where condition also for edit and delete requests, 
@@ -197,8 +202,9 @@ We are not happy about input validation and sanitization right now, so it's bett
 
 ## Tests
 
-  Not yet available
+Not yet available
 
 ## Release History
 
+* 0.1.1 Modified way of initializing algorest 
 * 0.1.0 Initial release
