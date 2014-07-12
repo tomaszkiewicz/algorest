@@ -1,4 +1,6 @@
 node_modules
 logs
 .idea/workspace.xml
+.idea
 logs/development.log
+examples/config.js
