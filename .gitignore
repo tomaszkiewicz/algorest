@@ -1,0 +1,4 @@
+node_modules
+logs
+.idea/workspace.xml
+logs/development.log
