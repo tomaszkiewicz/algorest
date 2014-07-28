@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var algorest = require('..');
+var config = require('./config');
 
 var app = express();
 
@@ -37,11 +38,13 @@ var authorize = function(req, action, tableName, id) {
     return true;
 };
 
-var connStr = 'postgres://algorest:dahF1vx@192.168.128.103/algorest';
+// setup algorest on app using config.connectionString as default connection string
 
-algorest(app, 'accounts', connStr);
+algorest(app, config.connectionString);
 
-algorest(app, 'accounts', connStr, {
+app.rest('accounts');
+
+app.rest('accounts', {
     resourceName: 'konta',
     //source: 'SELECT * FROM accounts JOIN users.....',
     afterSave: function() {},
