@@ -87,6 +87,18 @@ app.rest('accounts', options);
 
 Will expose table accounts table under /konta URL.
 
+#### authenticate
+
+Defines custom function to check if user is authenticated.
+
+The function matches express middleware function definition:
+
+```js
+function(req, res, next) {
+    next();
+};
+```
+
 #### authorize
 
 Defines custom function to authorize the request to specified resource.
