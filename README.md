@@ -87,6 +87,18 @@ app.rest('accounts', options);
 
 Will expose table accounts table under /konta URL.
 
+#### authenticate
+
+Defines custom function to check if user is authenticated.
+
+The function matches express middleware function definition:
+
+```js
+function(req, res, next) {
+    next();
+};
+```
+
 #### authorize
 
 Defines custom function to authorize the request to specified resource.
@@ -206,5 +218,6 @@ Not yet available
 
 ## Release History
 
+* 0.1.2 Added authentication hook
 * 0.1.1 Modified way of initializing algorest 
 * 0.1.0 Initial release
