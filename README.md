@@ -120,13 +120,16 @@ tableName parameter allows you to use one function for many tables - eg. in clai
 Defines function that can be used to intercept edit request and change item properties. The signature of this function is:
 
 ```js
-function(req, item) {
+function(req, item, next) {
     item.modifiedAt = new Date();
+    next();
 },
-
 ```
 
-Function gets request object and item object and can modify item in any way, for example (as you can see above) you can define modifiedAt property and assign current time.
+Function gets request object and item object and can modify item in any way, for example (as you can see above) you can
+define modifiedAt property and assign current time.
+
+Remember to call next() when you finish modifying your object.
 
 #### beforeAdd
 
@@ -142,8 +145,8 @@ var options = {
 };
 
 app.rest('accounts', options); 
-
 ```
+
 You can also define select property as a function with signature:
 
 ```js
@@ -154,20 +157,23 @@ function(req) {
 
 #### where
 
-The property allows you to define filtering string, array of filtering conditions or function that returns filtering string or array of filtering strings. This filtering strings are combined into output WHERE part of query and allows you to limit results to the rows user is allowed to read.
+The property allows you to limit results to the rows user is allowed to read, modify or delete.
 
-Lets pretend that we user some authentication system that assigns current user id to req.user.id property and we want to filter accounts to the accounts user is owner of, basing on userId column of table accounts:
+The property has to be set to either array or function that returns array.
+
+Array's first element has to be string with custom filtering expression (placeholders are supported), other elements are values to be put into placeholders.
+
+Lets pretend that we use some authentication system that assigns current user id to req.user.id property and we want to filter accounts to the accounts user is owner of, basing on userid column of table accounts:
 
 
 ```js
 var options = {
     where: function(req) {
-        return 'userId = ' + req.user.id; // remember about sanitizing your custom filters! 
+        return ['userid = $1', req.user.id];
     }
 };
 
 app.rest('accounts', options); 
-
 ```
 
 #### source
@@ -180,21 +186,48 @@ function(req) {
 }
 ```
 
+#### validate
+
+This property allows you to define validation hook that is called for every edit and add action.
+The syntax of validation function is:
+
+```js
+function(req, item, action, next) {
+    next(null, true);
+}
+```
+
+Function has to call next on finish, this call has to return true if validation succeded or false if validation failed. You can also pass any error in this callback. 
+
+### Default options
+
+You can specify default options by passing them as the third parameter on initial call, e.g.:
+
+```js
+var defaultOptions = {
+    authenticate: function(req, res, next) { next(); }
+};
+
+algorest(app, config.connectionString, defaultOptions);
+```
+
 ## Advanced example
 
 ```js
 var options = {
     resourceName: 'konta',
     select: [ 'id', 'name', 'balance', 'currency' ], // we skip other columns like userId, modifiedAt, createdAt
-    where: function(req) {
-        return 'userId = ' + req.user.id; // remember about sanitizing your custom filters! 
-    }, 
-    beforeEdit: function(req, item) {
+    where: function(req) { 
+        return [ 'userid = $1', req.user.id]; 
+    }
+    beforeEdit: function(req, item, next) {
         item.modifiedAt = new Date();
+        next();
     },
-    beforeAdd: function(req, item) {
+    beforeAdd: function(req, item, next) {
         item.createdAt = new Date();
         item.userId = req.user.id;
+        next();
     },
     authorize: function(req, action, tableName, id) {
         // let's deny deleting of records, user can only read, browse, edit and add new items
@@ -218,5 +251,6 @@ Not yet available
 
 ## Release History
 
+* 0.1.2 Added support to fibes, support of placeholders in where option, callback support in validate, beforeEdit and beforeAdd options, added default options support
 * 0.1.1 Modified way of initializing algorest 
 * 0.1.0 Initial release
