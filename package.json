@@ -4,6 +4,7 @@
   "description": "Package allows to expose your PostgreSQL database via REST service, allowing you to query it with OData operators",
   "main": "index.js",
   "dependencies": {
+    "change-case": "^2.1.1",
     "pg": "^3.3.0",
     "pg-escape": "0.0.3",
     "synchronize": "^0.9.8"
