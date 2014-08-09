@@ -73,7 +73,7 @@ app.rest('accounts', options);
 
 Options object can have any combination of following properties:
 
-#### resrouceName
+#### resourceName
 
 Specifies URL resource name that the database table will be available at, for example:
 
