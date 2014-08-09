@@ -251,6 +251,7 @@ Not yet available
 
 ## Release History
 
+* 0.1.3 Big refactor of main algorest file, added queryBuilder, queryExecutor and schemaProvider (not finished)
 * 0.1.2 Added support to fibes, support of placeholders in where option, callback support in validate, beforeEdit and beforeAdd options, added default options support
 * 0.1.1 Modified way of initializing algorest 
 * 0.1.0 Initial release
