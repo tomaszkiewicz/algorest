@@ -10,7 +10,8 @@
     "synchronize": "^0.9.8"
   },
   "devDependencies": {
-    "express": "^3.4.2"
+    "express": "^3.4.2",
+    "should": "^4.0.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
