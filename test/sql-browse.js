@@ -19,7 +19,7 @@ describe('SELECT queries', function () {
     it('should generate parametrized string filtering', function () {
       var result = sqlBuilder.browse({ 
         tableName: 'accounts',
-        where: ["user_id = $1", 5] 
+        where: ["user_id = $?", 5] 
       });
       result.sql.should.be.exactly("SELECT * FROM accounts WHERE user_id = $1;");
     });
@@ -35,9 +35,17 @@ describe('SELECT queries', function () {
     it('should generate parametrized function filtering', function () {
       var result = sqlBuilder.browse({ 
         tableName: 'accounts',
-        where: function (req) { return ["user_id = $1", 5]; }
+        where: function (req) { return ["user_id = $?", 5]; }
       });
       result.sql.should.be.exactly("SELECT * FROM accounts WHERE user_id = $1;");
+    });
+
+    it('should generate parametrized function filtering with multiple parameters', function () {
+      var result = sqlBuilder.browse({ 
+        tableName: 'accounts',
+        where: function (req) { return ["user_id = $? \n AND account_type = $?", 5]; }
+      });
+      result.sql.should.be.exactly("SELECT * FROM accounts WHERE user_id = $1 \n AND account_type = $2;");
     });
   });
 });
