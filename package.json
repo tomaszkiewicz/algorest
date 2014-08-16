@@ -4,8 +4,11 @@
   "description": "Package allows to expose your PostgreSQL database via REST service, allowing you to query it with OData operators",
   "main": "index.js",
   "dependencies": {
+    "sql-bricks": "^0.10.0",
+    "underscore": "^1.6.0"
   },
   "devDependencies": {
+    "should": "^4.0.4"
   },
   "repository": {
     "type": "git",
@@ -17,9 +20,11 @@
     "postgresql"
   ],
   "author": "Łukasz Tomaszkiewicz <tomaszkiewicz@algotronic.pl>",
-  "contributors": [{
-    "name": "Jakub Stefański",
-    "email": "j.stefanski@makebytes.com"
-  }],
+  "contributors": [
+    {
+      "name": "Jakub Stefański",
+      "email": "j.stefanski@makebytes.com"
+    }
+  ],
   "license": "BSD-3"
 }
