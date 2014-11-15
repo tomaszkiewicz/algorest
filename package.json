@@ -4,7 +4,7 @@
   "description": "Package allows to expose your PostgreSQL database via REST service, allowing you to query it with OData operators",
   "main": "index.js",
   "dependencies": {
-    "odata-parser": "^1.0.0",
+    "odata-parser": "https://github.com/tomaszkiewicz/node-odata-parser/archive/master.tar.gz",
     "sql-bricks": "makebytes/sql-bricks",
     "underscore": "^1.6.0"
   },
