@@ -4,3 +4,4 @@ logs
 .idea
 logs/development.log
 examples/config.js
+npm-debug.log
