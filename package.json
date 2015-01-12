@@ -1,12 +1,13 @@
 {
   "name": "algorest",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Package allows to expose your PostgreSQL database via REST service, allowing you to query it with OData operators",
   "main": "index.js",
   "dependencies": {
     "change-case": "^2.1.6",
     "odata-parser": "https://github.com/tomaszkiewicz/node-odata-parser/archive/master.tar.gz",
     "pg": "^4.1.1",
+    "simple-sql-parser": "^1.3.1",
     "sql-bricks": "git+https://github.com/makebytes/sql-bricks",
     "synchronize": "^0.9.9",
     "underscore": "^1.6.0"
