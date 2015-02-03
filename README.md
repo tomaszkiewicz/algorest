@@ -117,23 +117,74 @@ tableName parameter allows you to use one function for many tables - eg. in clai
 
 #### beforeEdit
 
-Defines function that can be used to intercept edit request and change item properties. The signature of this function is:
+Defines function or array of functions that can be used to intercept edit request and change item properties. The signature of this function is:
 
 ```js
-function(req, item, next) {
-    item.modifiedAt = new Date();
+function(req, oldItem, newItem, next) {
+    newItem.modifiedAt = new Date();
     next();
 },
 ```
 
-Function gets request object and item object and can modify item in any way, for example (as you can see above) you can
+Function gets request object and old as well as new item object and you can modify new item in any way, for example (as you can see above) you can
 define modifiedAt property and assign current time.
 
 Remember to call next() when you finish modifying your object.
 
+If eny exception occurs in any of the function algorest returns 400 HTTP code with "Validation error".
+
+#### afterEdit
+
+[Todo: add description]
+
+```js
+function(newItem) {
+
+}
+```
+
+If any exception occurs algorest writes it to the console. May change in future versions.
+
 #### beforeAdd
 
-This function works the same way as beforeEdit described above. It is called before new row is inserted into the table and allows you to modify inserted object.
+This function is called before new row is inserted into the table and allows you to modify inserted object.
+
+```js
+function(req, newItem, cb) {
+}
+```
+
+If eny exception occurs in any of the function algorest returns 400 HTTP code with "Validation error".
+
+#### afterAdd
+
+```js
+function(newItem) {
+
+}
+```
+
+If any exception occurs algorest writes it to the console. May change in future versions.
+
+#### beforeDelete
+
+```js
+function(req, item, next) {
+
+}
+```
+
+If eny exception occurs in any of the function algorest returns 400 HTTP code with "Validation error".
+
+#### afterDelete
+
+```js
+function(item) {
+
+}
+```
+
+If any exception occurs algorest writes it to the console. May change in future versions.
 
 #### select
 
@@ -152,6 +203,22 @@ You can also define select property as a function with signature:
 ```js
 function(req) {
     return ['id','name'];
+}
+```
+
+#### blacklist
+
+[array or function or array of functions]
+
+#### softDeleteColumn
+
+#### allowOperationsOnDeleted
+
+[true/false or function]
+
+```js
+function(req) {
+    return true;
 }
 ```
 
